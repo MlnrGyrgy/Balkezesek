@@ -21,10 +21,14 @@ namespace Balkezesek
             }
             file.Close();
         }
+        static void Megszamolas()
+        {
+            Console.WriteLine("Az adatok száma: {0}",balos.Count());
+        }
         static void Main(string[] args)
         {
             Beolvasas();
-           
+            Megszamolas();
             Console.ReadKey();
         }
     }
