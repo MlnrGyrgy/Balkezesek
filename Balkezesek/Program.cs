@@ -43,21 +43,36 @@ namespace Balkezesek
             {
                 Console.Write("Kérek egy évszámot 1990 és 1999 között!: ");
                 evszam = int.Parse(Console.ReadLine());
-                if (evszam < 1990 || evszam > 1999)
+                if (evszam < 1989 || evszam > 2000)
                 {
                     hibas = true;
                     Console.WriteLine("Hibás adat!");
                 }
             } while (hibas);
-            var eves = from b in balos where Convert.ToInt32(b.elso.Substring(0,4)) <= evszam && Convert.ToInt32(b.utolso.Substring(0, 4))>=evszam select b;
+            var eves = from b in balos where Convert.ToInt32(b.elso.Substring(0, 4)) <= evszam && Convert.ToInt32(b.utolso.Substring(0, 4)) >= evszam select b;
             var evesLista = eves.ToList();
             double szum = 0;
             foreach (var e in evesLista)
             {
-                szum+= e.suly;
+                szum += e.suly;
             }
-            double atlag = Math.Round(szum / evesLista.Count(),2);
-            Console.WriteLine($"{atlag} font");
+            double atlag = Math.Round(szum / evesLista.Count(), 2);
+            Console.WriteLine($"{atlag}");
+        }
+        static void Sorrend()
+        {
+            var abc = from b in balos
+                      orderby b.nev
+                      group b by b.nev[0] into abcTemp
+                      select abcTemp;
+            foreach (var ABC in abc)
+            {
+                Console.WriteLine(ABC.Key);
+                foreach (var i in ABC)
+                {
+                    Console.WriteLine($"\t{i.nev}");
+                }
+            }
         }
         static void Main(string[] args)
         {
@@ -65,6 +80,7 @@ namespace Balkezesek
             Megszamolas();
             OktMagassag();
             BekeresEsMunka();
+            Sorrend();
             Console.ReadKey();
         }
     }
